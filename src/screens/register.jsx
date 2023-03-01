@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, TextInput, StyleSheet, Button } from "react-native";
 import * as EmailValidator from "email-validator";
+import { Camera, CameraType } from "expo-camera";
 
 function Register() {
   // depend the whole form is filled or not
@@ -11,6 +12,11 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [type, setType] = useState(CameraType.back);
+  const [permission, requestPermission] = Camera.useCameraPermissions();
+
+  requestPermission();
 
   const onSubmitPress = () => {
     alert("hie this an alert from a valid form");
@@ -98,6 +104,7 @@ function Register() {
           onPress={onSubmitPress}
           disabled={isValid === false}
         />
+        <Camera style={styles.camera} type={type}></Camera>
       </View>
       <View style={styles.bottomBox}></View>
     </View>
@@ -123,5 +130,9 @@ const styles = StyleSheet.create({
   },
   bottomBox: {
     flex: 0.2,
+  },
+  camera: {
+    width: "100%",
+    height: 200,
   },
 });
