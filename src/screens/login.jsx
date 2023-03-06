@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TextInput, Button, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { Video } from "expo-av";
 
 import { Ionicons } from "@expo/vector-icons";
 
@@ -9,6 +10,7 @@ function Login({ navigation }) {
   const [passwordInput, setPasswordInput] = useState();
   const [showPassword, setShowPassword] = useState(true);
   const [imageUri, setImageUri] = useState();
+  const [videoUri, setVideoUri] = useState();
 
   const loginPressed = () => {
     navigation.navigate("register");
@@ -33,7 +35,7 @@ function Login({ navigation }) {
     })
       .then((response) => {
         if (response.uri !== undefined) {
-          setImageUri(response.uri);
+          setVideoUri(response.uri);
         }
       })
       .catch((error) => {
@@ -64,6 +66,15 @@ function Login({ navigation }) {
             onPress={onEyePressed}
           />
         </View>
+        {videoUri !== undefined ? (
+          <Video
+            style={{ width: 300, height: 300 }}
+            source={{ uri: videoUri }}
+            useNativeControls={true}
+          />
+        ) : (
+          <View />
+        )}
       </View>
 
       <View style={styles.bottomBox}>
