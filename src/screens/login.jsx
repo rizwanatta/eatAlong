@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TextInput, Button, Image } from "react-native";
+import { View, StyleSheet, TextInput, Button, Image, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Video } from "expo-av";
 
@@ -61,7 +61,7 @@ function Login({ navigation }) {
           />
           <Ionicons
             size={25}
-            color={showPassword ? "orange" : "purple"}
+            color={showPassword === true ? "orange" : "purple"}
             name={showPassword ? "eye" : "eye-off"}
             onPress={onEyePressed}
           />
@@ -75,6 +75,16 @@ function Login({ navigation }) {
         ) : (
           <View />
         )}
+
+
+        {
+          showPassword === false && (
+            <Text> ⚠️ your password is being shown </Text>
+          )
+        }
+
+
+
       </View>
 
       <View style={styles.bottomBox}>
