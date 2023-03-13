@@ -10,6 +10,9 @@ import {
 import * as EmailValidator from "email-validator";
 import { Camera, CameraType } from "expo-camera";
 
+import { auth } from "../services/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 function Register() {
   // depend the whole form is filled or not
   const [isValid, setIsValid] = useState(false);
@@ -31,7 +34,13 @@ function Register() {
   requestPermission();
 
   const onSubmitPress = () => {
-    alert("hie this an alert from a valid form");
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((response) => {
+        alert("all good");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   // component ma lifecycle k dremyan hona wali tbdilian capture ke jaskti hain
@@ -105,15 +114,6 @@ function Register() {
   return (
     <View style={styles.container}>
       <View style={styles.form}>
-        <Camera ref={cameraRef} style={styles.camera} type={type}>
-          <View style={styles.cameraButtonView}>
-            <TouchableOpacity onPress={onTakePicturePress}>
-              <View style={styles.cameraButton} />
-            </TouchableOpacity>
-          </View>
-        </Camera>
-
-        <Image style={styles.profilePicImg} source={{ uri: profilePicUri }} />
         <TextInput
           style={styles.inputBox}
           placeholder={"first name"}
